@@ -32,6 +32,9 @@ async function run() {
     const enrollCollection = database.collection("enroll");
     const appliedCollection = database.collection("applied");
 
+    // Classes Routes Is Here
+    
+
     await client.db("admin").command({ ping: 1 });
     console.log(
       "Pinged your deployment. You successfully connected to MongoDB!"
