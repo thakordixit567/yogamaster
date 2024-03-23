@@ -1,10 +1,14 @@
 const express = require("express");
 const app = express();
+const cors = require('cors');
 require("dotenv").config();
 const port = process.env.PORT || 5000;
 
-//monoDB Connection
+//middleware
+app.use(cors());
+app.use(express.json());
 
+//monoDB Connection
 const { MongoClient, ServerApiVersion } = require("mongodb");
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@yogamaster.ueaqpqh.mongodb.net/?retryWrites=true&w=majority`;
 
@@ -33,7 +37,12 @@ async function run() {
     const appliedCollection = database.collection("applied");
 
     // Classes Routes Is Here
-    
+    app.post('/new-class', async (req, res) => {
+      const newClass = req.body;
+     // newClass.availableSeats = parseInt(newClass.availableSeats);
+      const result = await classesCollection.insertOne(newClass);
+      res.send(result);
+    });
 
     await client.db("admin").command({ ping: 1 });
     console.log(
